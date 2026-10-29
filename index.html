@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#171a1c" />
+    <meta name="description" content="Lucky Lounge is a local casino-style demo app with virtual coins and playable slot previews." />
+    <title>Lucky Lounge — Casino Demo App</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="app.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div class="header-inner">
+        <button class="icon-button menu-button" aria-label="Open menu" id="menuButton"><span class="hamburger">☰</span></button>
+        <a class="brand" href="#top" aria-label="Lucky Lounge home"><span class="brand-mark">♣</span><span>lucky<span class="brand-light">lounge</span></span></a>
+        <nav class="primary-nav" aria-label="Main navigation">
+          <button class="active" data-view="lobby" aria-current="page"><span class="nav-icon">♣</span><span>Casino</span></button>
+          <button data-view="favorites"><span class="nav-icon">♡</span><span>Favorites</span></button>
+          <button data-view="history"><span class="nav-icon">▤</span><span>History</span></button>
+          <button data-view="rewards"><span class="nav-icon">✦</span><span>Rewards</span></button>
+        </nav>
+        <div class="header-actions">
+          <button class="icon-button search-top" id="topSearchButton" aria-label="Search games">⌕</button>
+          <button class="wallet-button" id="walletButton" aria-label="Open demo wallet"><span>◈</span><strong id="headerBalance">1,000</strong><small>DEMO</small></button>
+          <button class="button button-dark profile-button" id="profileButton"><span id="profileNameLabel">Guest</span></button>
+        </div>
+      </div>
+    </header>
+
+    <main id="top" class="page-shell">
+      <section class="category-bar" id="categoryBar" aria-label="Game categories">
+        <label class="category-search" aria-label="Search games">
+          <span aria-hidden="true">⌕</span>
+          <input id="gameSearch" type="search" placeholder="Search games" autocomplete="off" />
+        </label>
+        <div class="category-list" id="categoryList">
+          <button class="category-chip active" data-category="All">Home</button>
+          <button class="category-chip" data-category="All">All</button>
+          <button class="category-chip" data-category="Popular"><span>🔴</span> Popular</button>
+          <button class="category-chip" data-category="Hot"><span>🔥</span> Hot</button>
+          <button class="category-chip" data-category="New"><span>✨</span> New</button>
+          <button class="category-chip" data-category="Slots"><span>🎰</span> Slots</button>
+          <button class="category-chip" data-category="Spin & Win"><span>🎡</span> Spin &amp; Win</button>
+          <button class="category-chip" data-category="Crash"><span>🚀</span> Crash</button>
+          <button class="category-chip" data-category="Split The Pot"><span>🎁</span> Split The Pot</button>
+          <button class="category-chip" data-category="Spinners"><span>🔵</span> Spinners</button>
+          <button class="category-chip" data-category="Wheel"><span>🟠</span> Wheel</button>
+        </div>
+      </section>
+
+      <section class="lobby app-view" id="lobbyView">
+        <div class="section-heading">
+          <h1><span class="heading-clover">♣</span> <span id="headingLabel">All games</span></h1>
+          <button class="sort-button" id="sortButton" aria-label="Sort games alphabetically">↕ <span>A–Z</span></button>
+        </div>
+        <div class="games-grid" id="gamesGrid" aria-live="polite"></div>
+        <div class="empty-state" id="emptyState" hidden>
+          <span class="empty-icon">⌕</span>
+          <h2>No games found</h2>
+          <p>Try another title or choose a different category.</p>
+          <button class="button button-lime" id="resetFilters">Show all games</button>
+        </div>
+        <div class="load-more-wrap"><button class="load-more" id="loadMore">Load more games <span>＋</span></button></div>
+      </section>
+      <section class="history-view app-view" id="historyView" hidden>
+        <div class="section-heading"><h1><span class="heading-clover">▤</span> Recent play</h1><button class="text-action" id="clearHistoryButton">Clear history</button></div>
+        <div class="history-list" id="historyList"></div>
+        <div class="empty-state" id="historyEmpty"><span class="empty-icon">◷</span><h2>No recent games</h2><p>Your demo spins will appear here.</p><button class="button button-lime" data-go-view="lobby">Browse games</button></div>
+      </section>
+      <section class="rewards-view app-view" id="rewardsView" hidden>
+        <div class="section-heading"><h1><span class="heading-clover">✦</span> Rewards &amp; play</h1></div>
+        <div class="rewards-grid">
+          <article class="reward-card daily-reward"><span class="reward-icon">🎁</span><p class="eyebrow">DAILY DEMO BONUS</p><h2>Free coins for your next spin</h2><p>Collect 100 virtual coins. These have no cash value and can only be used in this demo.</p><button class="button button-lime" id="dailyBonusButton">Collect 100 coins</button><span class="reward-status" id="dailyBonusStatus"></span></article>
+          <article class="reward-card progress-reward"><span class="reward-icon">✦</span><p class="eyebrow">YOUR PLAY</p><h2><span id="spinsPlayed">0</span> demo spins</h2><p>Try the games using virtual credits. Your balance and history stay in this browser.</p><button class="button button-dark" data-go-view="history">View play history</button></article>
+        </div>
+        <div class="responsible-card"><div><p class="eyebrow">ABOUT THIS APP</p><h2>Play for fun</h2><p>Lucky Lounge is a local casino-style demo. It has no real accounts, live games, deposits, withdrawals, or cash prizes.</p></div><button class="text-action danger-action" id="resetDataButton">Reset demo data</button></div>
+      </section>
+      <footer class="site-footer">
+        <span class="footer-brand"><span class="brand-mark">♣</span> lucky lounge</span>
+        <span>Casino lobby demo · No real-money wagering or payments</span>
+        <span>Play for fun</span>
+      </footer>
+    </main>
+
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">⌃ <span>Back to top</span></button>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <dialog class="modal game-player-modal" id="gameModal">
+      <button class="modal-close" aria-label="Close game">×</button>
+      <div class="player-header"><div><p class="eyebrow">VIRTUAL COINS · DEMO PLAY</p><h2 id="modalGameTitle">Game title</h2></div><div class="player-balance">◈ <strong id="playerBalance">1,000</strong><span>DEMO</span></div></div>
+      <div class="player-body">
+        <div class="player-cover"><img id="modalGameImage" src="" alt="" /><span>DEMO GAME</span></div>
+        <div class="slot-console">
+          <div class="reels" aria-label="Slot reels"><div class="reel" id="reelOne">🍀</div><div class="reel" id="reelTwo">💎</div><div class="reel" id="reelThree">🔔</div></div>
+          <p class="spin-result" id="spinResult" aria-live="polite">Choose a stake and spin for fun.</p>
+          <div class="stake-row"><span>Stake</span><div class="stake-control"><button id="stakeDown" aria-label="Lower stake">−</button><output id="stakeValue">10</output><button id="stakeUp" aria-label="Raise stake">＋</button></div><span class="coin-label">◈ demo coins</span></div>
+          <button class="button button-lime spin-button" id="spinButton">Spin for 10 coins</button>
+          <p class="game-rules">Three matching symbols win 10× your stake. Two matching symbols win 2×. Demo credits only.</p>
+        </div>
+      </div>
+    </dialog>
+
+    <dialog class="modal account-modal" id="profileModal">
+      <button class="modal-close" aria-label="Close dialog">×</button>
+      <div class="account-emblem">♙</div><p class="eyebrow">PLAYER PROFILE</p><h2>Your local profile</h2><p class="account-note">Choose a display name. It is saved only in this browser; no password or account is needed.</p>
+      <label>Display name<input id="profileNameInput" type="text" maxlength="24" placeholder="Enter a nickname" autocomplete="nickname" /></label>
+      <button class="button button-lime full-button" id="saveProfileButton">Save profile</button>
+      <p class="switch-copy">Demo mode · Your data stays on this device</p>
+    </dialog>
+
+    <dialog class="modal wallet-modal" id="walletModal">
+      <button class="modal-close" aria-label="Close dialog">×</button>
+      <div class="account-emblem">◈</div><p class="eyebrow">DEMO WALLET</p><h2>Your virtual balance</h2>
+      <div class="wallet-balance-large"><strong id="walletBalance">1,000</strong><span>demo coins</span></div>
+      <p class="account-note">These coins have no cash value. This demo does not accept deposits or make withdrawals.</p>
+      <button class="button button-lime full-button" id="claimWalletCoins">Add 250 free demo coins</button>
+    </dialog>
+
+    <dialog class="modal menu-modal" id="menuModal">
+      <button class="modal-close" aria-label="Close dialog">×</button>
+      <a class="brand menu-brand" href="#top"><span class="brand-mark">♣</span><span>lucky<span class="brand-light">lounge</span></span></a>
+      <button data-go-view="lobby">♣ &nbsp; Casino lobby</button><button data-go-view="favorites">♡ &nbsp; Favorites</button><button data-go-view="history">▤ &nbsp; Play history</button><button data-go-view="rewards">✦ &nbsp; Rewards &amp; play</button><button id="menuProfileButton">♙ &nbsp; Player profile</button>
+      <button class="menu-wallet" id="menuWalletButton">◈ &nbsp; Demo wallet</button>
+    </dialog>
+  </body>
+</html>
